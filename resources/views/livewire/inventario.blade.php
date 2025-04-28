@@ -1,10 +1,10 @@
 <div class="space-y-6">
     <div>
-        <flux:heading size="xl" level="1">Inventário de Produtos</flux:heading>
-        <flux:text class="mb-6 mt-2 text-base">Use os campos abaixo para refinar sua busca.</flux:text>
+        <flux:heading size="xl" level="1" class="animate__animated animate__fadeIn animate__faster">Inventário de Produtos</flux:heading>
+        <flux:text class="mb-6 mt-2 text-base animate__animated animate__fadeIn animate__fast" >Use os campos abaixo para refinar sua busca.</flux:text>
     </div>
     <flux:separator variant="subtle"/>
-    <form wire:submit="submit()" class="flex justify-center">
+    <form wire:submit="submit()" class="flex justify-center animate__animated animate__fadeIn">
         <flux:card class="space-y-6 w-full">
             <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-5">
@@ -31,7 +31,7 @@
     </form>
 
     @if($sql)
-        <flux:card class="w-full min-w-6/12">
+        <flux:card class="w-full min-w-6/12 animate__animated animate__fadeIn animate__faster">
             <div class="space-y-6">
                 <div>
                     <flux:heading size="lg">Inventários</flux:heading>
@@ -74,7 +74,7 @@
                     <flux:button variant="primary" icon="arrows-pointing-in" wire:click="modal_juntar()">Juntar</flux:button>
                     <flux:button variant="primary" icon="arrows-pointing-out" wire:click="modal_separar()">Separar</flux:button>
                     <flux:button variant="primary" icon="cursor-arrow-ripple" wire:click="modal_analisar()">Analisar</flux:button>
-                    <flux:button icon="x-mark" x-on:click="$flux.modal('inventarios').close()">Sair</flux:button>
+                    <flux:button icon="x-mark" @click="$reset('sql')">Sair</flux:button>
                 </div>
             </div>
         </flux:card>

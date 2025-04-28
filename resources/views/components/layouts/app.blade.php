@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link rel="shortcut icon" href="{{ asset('imagens/logo_preto.png') }}" type="image/x-icon">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>{{ config('app.name') }}</title>
     @vite('resources/css/app.css')
     @fluxAppearance
