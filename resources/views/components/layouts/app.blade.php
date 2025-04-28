@@ -65,6 +65,7 @@
 <flux:main>
     {{ $slot }}
 </flux:main>
+<flux:toast position="top right" />
 @fluxScripts
 </body>
 </html>
