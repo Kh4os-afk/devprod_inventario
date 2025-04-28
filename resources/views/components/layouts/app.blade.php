@@ -17,15 +17,13 @@
     <flux:brand href="#" logo="{{ asset('imagens/logo_branco.png') }}" name="{{ config('app.name') }}" class="px-2 hidden dark:flex"/>
     <flux:input as="button" variant="filled" placeholder="Search..." icon="magnifying-glass"/>
     <flux:navlist variant="outline">
-        <flux:navlist.item icon="home" href="#" current>Home</flux:navlist.item>
-        <flux:navlist.item icon="inbox" badge="12" href="#">Inbox</flux:navlist.item>
-        <flux:navlist.item icon="document-text" href="#">Documents</flux:navlist.item>
-        <flux:navlist.item icon="calendar" href="#">Calendar</flux:navlist.item>
-        <flux:navlist.group expandable heading="Favorites" class="hidden lg:grid">
+        <flux:navlist.item icon="home" href="/">Dashboard</flux:navlist.item>
+        <flux:navlist.item icon="inbox" href="/inventario">Inventarios</flux:navlist.item>
+        {{--<flux:navlist.group expandable heading="Favorites" class="hidden lg:grid">
             <flux:navlist.item href="#">Marketing site</flux:navlist.item>
             <flux:navlist.item href="#">Android app</flux:navlist.item>
             <flux:navlist.item href="#">Brand guidelines</flux:navlist.item>
-        </flux:navlist.group>
+        </flux:navlist.group>--}}
     </flux:navlist>
     <flux:spacer/>
     <flux:navlist variant="outline">
@@ -44,7 +42,7 @@
         </flux:menu>
     </flux:dropdown>
 </flux:sidebar>
-<flux:header class="block! bg-white lg:bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+{{--<flux:header class="block! bg-white lg:bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
     <flux:navbar class="lg:hidden w-full">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
         <flux:spacer/>
@@ -62,11 +60,8 @@
     </flux:navbar>
     <flux:navbar scrollable>
         <flux:navbar.item href="#" current>Dashboard</flux:navbar.item>
-        <flux:navbar.item badge="32" href="#">Orders</flux:navbar.item>
-        <flux:navbar.item href="#">Catalog</flux:navbar.item>
-        <flux:navbar.item href="#">Configuration</flux:navbar.item>
     </flux:navbar>
-</flux:header>
+</flux:header>--}}
 <flux:main>
     {{ $slot }}
 </flux:main>
