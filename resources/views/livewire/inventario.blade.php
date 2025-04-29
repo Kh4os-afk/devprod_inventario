@@ -31,7 +31,7 @@
     </form>
 
     @if($sql)
-        <flux:card class="w-full min-w-6/12 animate__animated animate__fadeIn animate__faster">
+        <flux:card class="w-full min-w-6/12 animate__animated animate__fadeInUp animate__faster">
             <div class="space-y-6">
                 <div>
                     <flux:heading size="lg">Inventários</flux:heading>
