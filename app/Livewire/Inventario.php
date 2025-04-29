@@ -30,7 +30,7 @@ class Inventario extends Component
     #[Computed]
     public function filiais()
     {
-        return PcLib::where('codfunc', /*auth()->user()->matricula*/ 5601)
+        return PcLib::where('codfunc', auth()->user()->matricula)
             ->join('pcfilial', 'pclib.codigoa', '=', 'pcfilial.codigo')
             ->where('codtabela', 1)
             ->selectRaw("to_char(pclib.codigoa,'00') as codigoa, pcfilial.contato")

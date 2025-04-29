@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    protected $connection = 'oracle';
+    protected $table = 'pcempr';
+    protected $primaryKey = 'matricula';
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -17,32 +21,32 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
+    /*protected $fillable = [
         'name',
         'email',
         'password',
-    ];
+    ];*/
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
      */
-    protected $hidden = [
+    /*protected $hidden = [
         'password',
         'remember_token',
-    ];
+    ];*/
 
     /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    /*protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
+    }*/
 }

@@ -38,6 +38,8 @@
                     <flux:text class="mt-2">Selecione um ou mais inventários para realizar as operações desejadas.</flux:text>
                 </div>
 
+                <div></div>
+
                 <div>
                     <flux:checkbox.group wire:model="inventarios">
                         <flux:table>
@@ -74,7 +76,6 @@
                     <flux:button variant="primary" icon="arrows-pointing-in" wire:click="modal_juntar()">Juntar</flux:button>
                     <flux:button variant="primary" icon="arrows-pointing-out" wire:click="modal_separar()">Separar</flux:button>
                     <flux:button variant="primary" icon="cursor-arrow-ripple" wire:click="modal_analisar()">Analisar</flux:button>
-                    <flux:button icon="x-mark" @click="$reset('sql')">Sair</flux:button>
                 </div>
             </div>
         </flux:card>
