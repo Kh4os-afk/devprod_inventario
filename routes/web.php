@@ -8,7 +8,7 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', \App\Livewire\Index::class);
-    Route::get('/inventario', \App\Livewire\Inventario::class);
+    Route::get('/inventario', \App\Livewire\Inventario::class)->lazy();
 
     Route::get('/logout', [\App\Livewire\Auth\Login::class, 'logout'])->name('logout');
 });

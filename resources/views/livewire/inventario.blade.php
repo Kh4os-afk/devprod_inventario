@@ -38,8 +38,6 @@
                     <flux:text class="mt-2">Selecione um ou mais inventários para realizar as operações desejadas.</flux:text>
                 </div>
 
-                <div></div>
-
                 <div>
                     <flux:checkbox.group wire:model="inventarios">
                         <flux:table>
