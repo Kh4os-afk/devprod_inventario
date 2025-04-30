@@ -9,11 +9,11 @@
     </div>
     <flux:separator variant="subtle"/>
     <div class="grid grid-cols-12 gap-4">
-        <flux:card class="col-span-6 animate__animated animate__fadeIn">
+        <flux:card class="col-span-6 max-lg:col-span-12 animate__animated animate__fadeIn">
             <flux:heading size="xl" class="mb-4">Inventários Fechados</flux:heading>
             <div id="chartdiv"></div>
         </flux:card>
-        <flux:card class="col-span-6 animate__animated animate__fadeIn">
+        <flux:card class="col-span-6 max-lg:col-span-12 animate__animated animate__fadeIn">
             <flux:heading size="xl" class="mb-4">Inventários Abertos</flux:heading>
             <div id="chartdiv2"></div>
         </flux:card>
@@ -22,16 +22,10 @@
 
 @assets
 <style>
-    #chartdiv {
+    #chartdiv, #chartdiv2 {
         width: 100%;
         height: 500px;
     }
-
-    #chartdiv2 {
-        width: 100%;
-        height: 500px;
-    }
-
 </style>
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
@@ -50,10 +44,10 @@
         root1._logo.dispose();
 
         var chart1 = root1.container.children.push(am5xy.XYChart.new(root1, {
-            panX: true,
-            panY: true,
+            panX: false,
+            panY: false,
             wheelX: "panX",
-            wheelY: "zoomX",
+            wheelY: "none",
             pinchZoomX: true,
             paddingLeft: 0,
             paddingRight: 1
@@ -136,10 +130,10 @@
         root2._logo.dispose();
 
         var chart2 = root2.container.children.push(am5xy.XYChart.new(root2, {
-            panX: true,
-            panY: true,
+            panX: false,
+            panY: false,
             wheelX: "panX",
-            wheelY: "zoomX",
+            wheelY: "none",
             pinchZoomX: true,
             paddingLeft: 0,
             paddingRight: 1
@@ -204,13 +198,13 @@
         const updateChartColors = (isDark) => {
             const labelColor = isDark ? am5.color(0xFFFFFF) : am5.color(0x000000);
 
-            xRenderer1.labels.template.setAll({ fill: labelColor });
-            yAxis1.get("renderer").labels.template.setAll({ fill: labelColor });
-            series1.get("tooltip").label.setAll({ fill: labelColor });
+            xRenderer1.labels.template.setAll({fill: labelColor});
+            yAxis1.get("renderer").labels.template.setAll({fill: labelColor});
+            series1.get("tooltip").label.setAll({fill: labelColor});
 
-            xRenderer2.labels.template.setAll({ fill: labelColor });
-            yAxis2.get("renderer").labels.template.setAll({ fill: labelColor });
-            series2.get("tooltip").label.setAll({ fill: labelColor });
+            xRenderer2.labels.template.setAll({fill: labelColor});
+            yAxis2.get("renderer").labels.template.setAll({fill: labelColor});
+            series2.get("tooltip").label.setAll({fill: labelColor});
         };
 
         const observer = new MutationObserver(() => {
