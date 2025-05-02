@@ -36,7 +36,7 @@
     <flux:navlist variant="outline">
         <flux:navlist.item icon="cog-6-tooth" href="#" wire:navigate.hover badge-color="lime">Configurações</flux:navlist.item>
         <flux:navlist.item icon="information-circle" href="https://api.whatsapp.com/send?phone=5592992309115&text=Oi!%20Estou%20precisando%20de%20ajuda%20com%20o%20Devprod%20Inventario%20😢" target="_blank">Ajuda /
-            <i>1.1.1</i>
+            <i>1.2.0</i>
         </flux:navlist.item>
     </flux:navlist>
 

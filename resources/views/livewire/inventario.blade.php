@@ -1,7 +1,7 @@
 <div class="space-y-6">
     <div>
         <flux:heading size="xl" level="1" class="animate__animated animate__fadeIn animate__faster">Inventário de Produtos</flux:heading>
-        <flux:text class="mb-6 mt-2 text-base animate__animated animate__fadeIn animate__fast" >Use os campos abaixo para refinar sua busca.</flux:text>
+        <flux:text class="mb-6 mt-2 text-base animate__animated animate__fadeIn animate__fast">Use os campos abaixo para refinar sua busca.</flux:text>
     </div>
     <flux:separator variant="subtle"/>
     <form wire:submit="submit()" class="flex justify-center animate__animated animate__fadeIn">
@@ -45,7 +45,9 @@
                                 <flux:table.column></flux:table.column>
                                 <flux:table.column>Filial</flux:table.column>
                                 <flux:table.column>Inventario</flux:table.column>
+                                <flux:table.column>Seção</flux:table.column>
                                 <flux:table.column>Data</flux:table.column>
+                                <flux:table.column>Dias</flux:table.column>
                                 <flux:table.column>Contagem</flux:table.column>
                                 <flux:table.column>Funcionario</flux:table.column>
                             </flux:table.columns>
@@ -56,11 +58,15 @@
                                         <flux:table.cell>
                                             <flux:checkbox value="{{ $dado->numinvent }}"/>
                                         </flux:table.cell>
-                                        <flux:table.cell>{{ $dado->codfilial }}</flux:table.cell>
+                                        <flux:table.cell>{{ $dado->filial }}</flux:table.cell>
                                         <flux:table.cell>{{ $dado->numinvent }}</flux:table.cell>
+                                        <flux:table.cell>{{ $dado->secao }}</flux:table.cell>
                                         <flux:table.cell>{{ $dado->data ? \Carbon\Carbon::parse($dado->data)->format('d/m/Y') : '' }}</flux:table.cell>
+                                        <flux:table.cell>
+                                            <flux:badge :color="($dado->dias <= 5) ? 'lime' : 'red'">{{ $dado->dias }}</flux:badge>
+                                        </flux:table.cell>
                                         <flux:table.cell>{{ $dado->dt_contagem ? \Carbon\Carbon::parse($dado->dt_contagem)->format('d/m/Y') : '' }}</flux:table.cell>
-                                        <flux:table.cell>{{ $dado->codfunc }}</flux:table.cell>
+                                        <flux:table.cell>{{ $dado->func }}</flux:table.cell>
                                     </flux:table.row>
                                 @empty
                                 @endforelse

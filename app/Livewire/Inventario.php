@@ -46,19 +46,28 @@ class Inventario extends Component
         $dtfinal = $this->range['end'];
 
         $this->sql = DB::connection('oracle')->select("
-            SELECT DISTINCT 
-              CODFILIAL,
-              NUMINVENT,
-              DATA,
-              MAX(NVL(DATACONT1, DATACONT3)) AS DT_CONTAGEM,
-              MAX((SELECT E.NOME_GUERRA FROM PCEMPR E WHERE E.MATRICULA = T.CODFUNCMONTAGEM)) AS CODFUNC
-            FROM PCINVENTROT T
-            WHERE DTATUALIZACAO IS NULL
-              AND DTCANCEL IS NULL
-              AND T.CODFILIAL = $this->codfilial
-              AND T.DATA BETWEEN '$dtinicial' AND '$dtfinal'
-            GROUP BY CODFILIAL,NUMINVENT,DATA
-            ORDER BY NUMINVENT DESC
+            SELECT DISTINCT
+                   TO_CHAR (T.CODFILIAL, '00') FILIAL,
+                   NUMINVENT,
+                   MAX (S.DESCRICAO) || ' (' || COUNT (DISTINCT (T.CODPROD)) || ')' SECAO,
+                   MIN (DATA) AS DATA,
+                   TRUNC (MIN (SYSDATE - DATA)) AS DIAS,
+                   MAX (TRUNC (NVL (DATACONT1, DATACONT3))) AS DT_CONTAGEM,
+                   MAX ( (SELECT E.NOME_GUERRA
+                            FROM PCEMPR E
+                           WHERE E.MATRICULA = T.CODFUNCMONTAGEM))
+                       AS FUNC
+              FROM PCINVENTROT T, PCPRODUT P, PCSECAO S
+             WHERE     1 = 1
+                   AND P.CODSEC = S.CODSEC
+                   AND P.CODEPTO = S.CODEPTO
+                   AND P.CODPROD = T.CODPROD
+                   AND DTATUALIZACAO IS NULL
+                   AND DTCANCEL IS NULL
+                   AND T.CODFILIAL = $this->codfilial
+                   AND T.DATA BETWEEN '$dtinicial' AND '$dtfinal'
+            GROUP BY T.CODFILIAL, NUMINVENT
+            ORDER BY DATA
 ");
     }
 
