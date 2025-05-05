@@ -4,6 +4,22 @@
         <flux:text class="mb-6 mt-2 text-base animate__animated animate__fadeIn animate__fast">Use os campos abaixo para refinar sua busca.</flux:text>
     </div>
     <flux:separator variant="subtle"/>
+
+    <div x-data="{ visible: true }" x-show="visible" x-collapse>
+        <div x-show="visible" x-transition>
+            <flux:callout icon="bell-alert" color="blue" inline>
+                <flux:callout.heading>Nova atualização disponível</flux:callout.heading>
+                <flux:callout.text>
+                    Agora é possível visualizar os detalhes do inventário ao clicar sobre o <span class="font-medium text-zinc-800 dark:text-white">número do inventário</span> correspondente.
+                </flux:callout.text>
+
+                <x-slot name="actions" class="@md:h-full m-0!">
+                    <flux:button x-on:click="visible = false">Entendi</flux:button>
+                </x-slot>
+            </flux:callout>
+        </div>
+    </div>
+
     <form wire:submit="submit()" class="flex justify-center animate__animated animate__fadeIn">
         <flux:card class="space-y-6 w-full">
             <div class="grid grid-cols-12 gap-2">
@@ -39,7 +55,7 @@
                 </div>
 
                 <div>
-                    <flux:checkbox.group wire:model="inventarios">
+                    <flux:checkbox.group wire:model="inventarios" class="select-auto!">
                         <flux:table>
                             <flux:table.columns>
                                 <flux:table.column></flux:table.column>
@@ -59,7 +75,9 @@
                                             <flux:checkbox value="{{ $dado->numinvent }}"/>
                                         </flux:table.cell>
                                         <flux:table.cell>{{ $dado->filial }}</flux:table.cell>
-                                        <flux:table.cell>{{ $dado->numinvent }}</flux:table.cell>
+                                        <flux:table.cell>
+                                            <flux:button variant="ghost" wire:click="infoInventario({{ $dado->numinvent }})">{{ $dado->numinvent }}</flux:button>
+                                        </flux:table.cell>
                                         <flux:table.cell>{{ $dado->secao }}</flux:table.cell>
                                         <flux:table.cell>{{ $dado->data ? \Carbon\Carbon::parse($dado->data)->format('d/m/Y') : '' }}</flux:table.cell>
                                         <flux:table.cell>
@@ -118,6 +136,58 @@
             <div class="flex">
                 <flux:spacer/>
                 <flux:button type="submit" variant="primary" wire:click="fecharModal()">Fechar</flux:button>
+            </div>
+        </div>
+    </flux:modal>
+
+    <flux:modal name="info-inventario" class="min-w-10/12">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Detalhes do Inventário</flux:heading>
+            </div>
+
+            <flux:table>
+                <flux:table.columns>
+                    <flux:table.column>Cod Prod</flux:table.column>
+                    <flux:table.column>Descrição</flux:table.column>
+                    <flux:table.column>Qt 1</flux:table.column>
+                    <flux:table.column>Qt 2</flux:table.column>
+                    <flux:table.column>Estoque</flux:table.column>
+                    <flux:table.column>Dif</flux:table.column>
+                    <flux:table.column>Custo</flux:table.column>
+                    <flux:table.column>Categoria</flux:table.column>
+                    <flux:table.column>Ult Saida</flux:table.column>
+                    <flux:table.column>Ult Entrada</flux:table.column>
+                    <flux:table.column>FL</flux:table.column>
+                    <flux:table.column>Estoque Atual</flux:table.column>
+                    <flux:table.column>Resultado</flux:table.column>
+                </flux:table.columns>
+
+                <flux:table.rows>
+                    @forelse($this->infoInventarios ?? [] as $dadosmodal)
+                        <flux:table.row>
+                            <flux:table.cell variant="strong">{{ $dadosmodal->codprod }}</flux:table.cell>
+                            <flux:table.cell>{{ $dadosmodal->descricao }}</flux:table.cell>
+                            <flux:table.cell>{{ number_format($dadosmodal->qt1,3,',','.') }}</flux:table.cell>
+                            <flux:table.cell>{{ number_format($dadosmodal->qt2,3,',','.') }}</flux:table.cell>
+                            <flux:table.cell>{{ number_format($dadosmodal->estoque,3,',','.') }}</flux:table.cell>
+                            <flux:table.cell>{{ number_format($dadosmodal->dif,3,',','.') }}</flux:table.cell>
+                            <flux:table.cell>{{ number_format($dadosmodal->custo,3,',','.') }}</flux:table.cell>
+                            <flux:table.cell>{{ $dadosmodal->categoria }}</flux:table.cell>
+                            <flux:table.cell>{{ $dadosmodal->ultsaida }}</flux:table.cell>
+                            <flux:table.cell>{{ $dadosmodal->ultentra }}</flux:table.cell>
+                            <flux:table.cell>{{ $dadosmodal->f_linha }}</flux:table.cell>
+                            <flux:table.cell>{{ number_format($dadosmodal->est_atual,3,',','.') }}</flux:table.cell>
+                            <flux:table.cell>{{ $dadosmodal->resultado }}</flux:table.cell>
+                        </flux:table.row>
+                    @empty
+                    @endforelse
+                </flux:table.rows>
+            </flux:table>
+
+            <div class="flex mt-4">
+                <flux:spacer/>
+                <flux:button x-on:click="$flux.modal('info-inventario').close()">Fechar</flux:button>
             </div>
         </div>
     </flux:modal>

@@ -18,6 +18,7 @@ class Inventario extends Component
     public $sql;
     public $modalsql;
     public $inventarios = [];
+    public $infoInventarios;
 
     public function mount()
     {
@@ -206,6 +207,68 @@ class Inventario extends Component
         $this->submit();
 
         $this->modal('modal')->close();
+    }
+
+    public function infoInventario($numinvent)
+    {
+        $this->infoInventarios = DB::connection('oracle')->select("
+            SELECT I.CODPROD,
+                 P.DESCRICAO || ' ' || P.EMBALAGEM AS descricao,
+                 NVL (I.QT1, 0) AS QT1,
+                 I.QT2,
+                 I.QTESTGER ESTOQUE,
+                 (NVL (I.QT1, 0) - I.QTESTGER) DIF,
+                 TRUNC (NVL (E.CUSTOFIN, E.CUSTOULTENT), 2) CUSTO,
+                 C.CATEGORIA || ' ' || C.CODCATEGORIA AS CATEGORIA,
+                 TO_CHAR (E.DTULTSAIDA, 'DD/MM/YY') ULTSAIDA,
+                 TO_CHAR (E.DTULTENT, 'DD/MM/YY') ULTENTRA,
+                 CASE
+                    WHEN P.DTEXCLUSAO IS NOT NULL THEN 'S'
+                    ELSE DECODE (P.OBS2, 'FL', 'S', F.FORALINHA)
+                 END
+                    AS F_LINHA,
+                 E.QTESTGER EST_ATUAL,
+                 CASE
+                    WHEN NVL (I.QT1, 0) = 0 AND NVL (I.QTESTGER, 0) = 0
+                    THEN
+                       'Não Encontrado'
+                    WHEN NVL (I.QT1, 0) > NVL (I.QTESTGER, 0)
+                    THEN
+                       'Sobrando'
+                    WHEN NVL (I.QT1, 0) < NVL (I.QTESTGER, 0)
+                    THEN
+                       'Faltando'
+                    ELSE
+                       'Igual'
+                 END
+                    AS RESULTADO
+            FROM PCINVENTROT I,
+                 PCPRODUT P,
+                 PCCATEGORIA C,
+                 PCEST E,
+                 PCPRODFILIAL F
+           WHERE     I.NUMINVENT = $numinvent
+                 AND E.CODPROD = P.CODPROD
+                 AND E.CODFILIAL = I.CODFILIAL
+                 AND F.CODFILIAL = E.CODFILIAL
+                 AND F.CODPROD = E.CODPROD
+                 AND I.CODPROD = P.CODPROD
+                 AND C.CODCATEGORIA = P.CODCATEGORIA
+                 -- AND C.CODCATEGORIA = :CODCATEGORIA
+                 -- AND P.CODPROD = :CODPROD
+                 AND C.CODSEC = P.CODSEC
+                 AND NOT (    NVL (I.QT1, 0) = 0
+                          AND I.QT2 = 0
+                          AND NVL (I.QTESTGER, 0) = 0
+                          AND NVL (E.QTESTGER, 0) = 0
+                          AND (CASE
+                                  WHEN P.DTEXCLUSAO IS NOT NULL THEN 'S'
+                                  ELSE DECODE (P.OBS2, 'FL', 'S', F.FORALINHA)
+                               END) = 'S')
+        ORDER BY C.CODCATEGORIA, P.DESCRICAO
+        ");
+
+        Flux::modal('info-inventario')->show();
     }
 
     public function render()
