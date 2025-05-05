@@ -7,7 +7,7 @@
 
     <div x-data="{ visible: true }" x-show="visible" x-collapse>
         <div x-show="visible" x-transition>
-            <flux:callout icon="bell-alert" color="blue" inline>
+            <flux:callout icon="bell-alert" color="blue" inline class="animate__animated animate__fadeIn">
                 <flux:callout.heading>Nova atualização disponível</flux:callout.heading>
                 <flux:callout.text>
                     Agora é possível visualizar os detalhes do inventário ao clicar sobre o <span class="font-medium text-zinc-800 dark:text-white">número do inventário</span> correspondente.
