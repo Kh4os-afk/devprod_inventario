@@ -43,6 +43,8 @@ class Inventario extends Component
     {
         $this->validate();
 
+        $this->reset(['inventarios']);
+
         $dtinicial = $this->range['start'];
         $dtfinal = $this->range['end'];
 
@@ -106,6 +108,8 @@ class Inventario extends Component
             WHERE ANTERIOR IN ($inventarios)
         ");
 
+        $this->submit();
+
         Flux::modal('modal')->show();
 
         Flux::toast(
@@ -150,6 +154,8 @@ class Inventario extends Component
             WHERE ANTERIOR IN ($inventarios)
         ");
 
+        $this->submit();
+
         Flux::modal('modal')->show();
 
         Flux::toast(
@@ -193,6 +199,8 @@ class Inventario extends Component
             WHERE ANTERIOR IN ($inventarios)
         ");
 
+        $this->submit();
+
         Flux::modal('modal')->show();
 
         Flux::toast(
@@ -200,13 +208,6 @@ class Inventario extends Component
             text: 'Inventários em analise.',
             variant: 'success',
         );
-    }
-
-    public function fecharModal()
-    {
-        $this->submit();
-
-        $this->modal('modal')->close();
     }
 
     public function infoInventario($numinvent)

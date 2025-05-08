@@ -135,7 +135,7 @@
 
             <div class="flex">
                 <flux:spacer/>
-                <flux:button type="submit" variant="primary" wire:click="fecharModal()">Fechar</flux:button>
+                <flux:button type="submit" variant="primary" x-on:click="$flux.modal('modal').close()">Fechar</flux:button>
             </div>
         </div>
     </flux:modal>
