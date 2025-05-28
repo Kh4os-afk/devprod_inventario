@@ -51,16 +51,18 @@ class Inventario extends Component
         $this->sql = DB::connection('oracle')->select("
             SELECT DISTINCT
                    TO_CHAR (T.CODFILIAL, '00') FILIAL,
-                   NUMINVENT,
+                   t.NUMINVENT,
                    MAX (S.DESCRICAO) || ' (' || COUNT (DISTINCT (T.CODPROD)) || ')' SECAO,
-                   MIN (DATA) AS DATA,
-                   TRUNC (MIN (SYSDATE - DATA)) AS DIAS,
+                   MIN (t.DATA) AS DATA,
+                   TRUNC (MIN (SYSDATE - t.DATA)) AS DIAS,
                    MAX (TRUNC (NVL (DATACONT1, DATACONT3))) AS DT_CONTAGEM,
+                   MAX (T.DTANALISE)DTANALISE,
+         MAX (L.RESULTADO) RESULTADO,
                    MAX ( (SELECT E.NOME_GUERRA
                             FROM PCEMPR E
                            WHERE E.MATRICULA = T.CODFUNCMONTAGEM))
                        AS FUNC
-              FROM PCINVENTROT T, PCPRODUT P, PCSECAO S
+              FROM PCINVENTROT T LEFT JOIN DVP_LOGINVENTARIO L ON L.NUMINVENT = T.NUMINVENT, PCPRODUT P, PCSECAO S
              WHERE     1 = 1
                    AND P.CODSEC = S.CODSEC
                    AND P.CODEPTO = S.CODEPTO
@@ -69,8 +71,8 @@ class Inventario extends Component
                    AND DTCANCEL IS NULL
                    AND T.CODFILIAL = $this->codfilial
                    AND T.DATA BETWEEN '$dtinicial' AND '$dtfinal'
-            GROUP BY T.CODFILIAL, NUMINVENT
-            ORDER BY DATA
+            GROUP BY T.CODFILIAL, t.NUMINVENT
+            ORDER  BY DATA
 ");
     }
 

@@ -65,6 +65,8 @@
                                 <flux:table.column>Data</flux:table.column>
                                 <flux:table.column>Dias</flux:table.column>
                                 <flux:table.column>Contagem</flux:table.column>
+                                <flux:table.column>Analise</flux:table.column>
+                                <flux:table.column>Resultado</flux:table.column>
                                 <flux:table.column>Funcionario</flux:table.column>
                             </flux:table.columns>
 
@@ -84,6 +86,8 @@
                                             <flux:badge :color="($dado->dias <= 5) ? 'lime' : 'red'">{{ $dado->dias }}</flux:badge>
                                         </flux:table.cell>
                                         <flux:table.cell>{{ $dado->dt_contagem ? \Carbon\Carbon::parse($dado->dt_contagem)->format('d/m/Y') : '' }}</flux:table.cell>
+                                        <flux:table.cell>{{ $dado->dtanalise ? \Carbon\Carbon::parse($dado->dtanalise)->format('d/m/Y') : '' }}</flux:table.cell>
+                                        <flux:table.cell>{{ $dado->resultado }}</flux:table.cell>
                                         <flux:table.cell>{{ $dado->func }}</flux:table.cell>
                                     </flux:table.row>
                                 @empty
